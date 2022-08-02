@@ -37,7 +37,8 @@ def compare_hosts(veeam_list, vcenter_list, ignore_hosts):
     # If ignore list exists, remove hosts from the list
     if ignore_hosts:
         for host in ignore_hosts:
-            missing_hosts.remove(host)
+            if host in missing_hosts:
+                missing_hosts.remove(host)
 
     # Check for hosts in the list
     if not missing_hosts:
@@ -66,7 +67,7 @@ def main():
     # Get Host Lists
     veeam_list = hosts_veeam.get_hosts(veeam_host, veeam_user, veeam_pass)
     vcenter_list = hosts_vcenter.get_hosts(vcenter_host, vcenter_user, vcenter_pass)
-
+    
     # Compare the lists
     result = compare_hosts(veeam_list, vcenter_list, ignore_hosts)
 
